@@ -1,0 +1,26 @@
+{
+  "name": "react-bird",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider next -p 3060"
+  },
+  "author": "moodnightsummer",
+  "license": "ISC",
+  "dependencies": {
+    "@ant-design/icons": "^4.2.1",
+    "@ctrl/tinycolor": "^3.3.1",
+    "antd": "^4.3.0",
+    "next": "^9.4.4",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "styled-components": "^5.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0"
+  }
+}
