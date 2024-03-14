@@ -10,8 +10,9 @@ import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import PostImages from "./PostImages";
-
+import PostCardContent from "./PostCardContent";
 import CommentForm from "./CommentForm";
+
 const PostCard = ({ post }) => {
   const [liked, setLiked] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
@@ -62,7 +63,7 @@ const PostCard = ({ post }) => {
       >
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
-          description={post.content}
+          description={<PostCardContent postData={post.content} />}
           title={post.User.nickname}
         />
       </Card>

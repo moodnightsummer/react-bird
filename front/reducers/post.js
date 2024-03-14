@@ -6,7 +6,7 @@ export const initialState = {
         id: 1,
         nickname: "재일",
       },
-      content: "첫 번째 게시글 #해시태그",
+      content: "첫 번째 게시글 #해시태그 #내가최고 ###내가짱",
       Images: [
         {
           src: "https://velog.velcdn.com/images/mcc919/post/b38b234b-9d72-48ed-988e-a07d0a667927/git.png",
