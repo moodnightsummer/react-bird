@@ -11,8 +11,11 @@ export const initialState = {
         {
           src: "https://velog.velcdn.com/images/mcc919/post/b38b234b-9d72-48ed-988e-a07d0a667927/git.png",
         },
+        {
+          src: "https://blog.kakaocdn.net/dn/3OZ20/btrjD2ydkWU/NqYTsTO0jZrd8ewcGHwCHK/img.jpg",
+        },
       ],
-      Comment: [
+      Comments: [
         {
           User: {
             nickname: "jelly",
@@ -46,7 +49,7 @@ const dummyPost = {
   },
   content: "ddd",
   Images: [],
-  Comment: [],
+  Comments: [],
 };
 
 const reducer = (state = initialState, action) => {
