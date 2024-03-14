@@ -14,6 +14,9 @@ export const initialState = {
         {
           src: "https://blog.kakaocdn.net/dn/3OZ20/btrjD2ydkWU/NqYTsTO0jZrd8ewcGHwCHK/img.jpg",
         },
+        {
+          src: "https://blog.kakaocdn.net/dn/3OZ20/btrjD2ydkWU/NqYTsTO0jZrd8ewcGHwCHK/img.jpg",
+        },
       ],
       Comments: [
         {
