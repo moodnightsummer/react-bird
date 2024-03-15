@@ -1,10 +1,10 @@
 import { createWrapper } from "next-redux-wrapper";
-import { createStore } from "redux";
-import { applyMiddleware } from "redux";
-import { compose } from "redux";
+import { applyMiddleware, createStore, compose } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import createSagaMiddleware from "redux-saga";
+
 import reducer from "../reducers";
-import createSagaMiddleware from "next-redux-saga";
+import rootSaga from "../sagas";
 
 const loggerMiddleware =
   ({ dispatch, getState }) =>
@@ -14,18 +14,15 @@ const loggerMiddleware =
     return next(action);
   };
 
-// store, reducer
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
-  const middleware = [sagaMiddleware, loggerMiddleware];
+  const middlewares = [sagaMiddleware, loggerMiddleware];
   const enhancer =
     process.env.NODE_ENV === "prod"
-      ? compose(applyMiddleware(...middleware))
-      : composeWithDevTools(applyMiddleware(...middleware));
+      ? compose(applyMiddleware(...middlewares))
+      : composeWithDevTools(applyMiddleware(...middlewares));
   const store = createStore(reducer, enhancer);
-
   store.sagaTask = sagaMiddleware.run(rootSaga);
-
   return store;
 };
 

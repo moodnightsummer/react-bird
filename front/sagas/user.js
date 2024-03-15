@@ -2,9 +2,12 @@ import {
   all,
   fork,
   takeEvery,
-  takeLatest, // 클릭을 실수로 두 번 했을 때 마지막 요청만 허용하고 다른 작업을 날려 준다.
+  takeLatest, // 클릭을 실수로 두 번 했을 때 마지막 요청만 허용하고 다른 작업을 날려 준다. (응답만 취소, 요청 취소 X)
+  // 따라서 backend에서 데이터 저장할 때 중복인지 검사해 줘야 한다.
   call,
   put,
+  throttle,
+  delay,
 } from "redux-saga/effects";
 import axios from "axios";
 
@@ -14,11 +17,13 @@ function logInAPI(data) {
 
 function* logIn(action) {
   try {
+    console.log("saga logIn");
+    yield delay(1000);
     // fork : 논 블로킹, call : 비동기 (값이 넘어올 때까지 기다림)
-    const result = yield call(logInAPI, action.data); // 클라이언트가 입력한 데이터가 action.data에 담겨 있다.
+    // const result = yield call(logInAPI, action.data); // 클라이언트가 입력한 데이터가 action.data에 담겨 있다.
     yield put({
       type: "LOG_IN_SUCCESS",
-      data: result.data,
+      data: action.data,
     });
   } catch (err) {
     yield put({
@@ -34,35 +39,16 @@ function logOutAPI() {
 
 function* logOut() {
   try {
+    console.log("saga logout");
+    yield delay(1000);
     // fork : 논 블로킹, call : 비동기 (값이 넘어올 때까지 기다림)
-    const result = yield call(logOutAPI);
+    // const result = yield call(logOutAPI);
     yield put({
       type: "LOG_OUT_SUCCESS",
-      data: result.data,
     });
   } catch (err) {
     yield put({
       type: "LOG_OUT_FAILURE",
-      data: err.response.data,
-    });
-  }
-}
-
-function addPostAPI() {
-  return axios.post("/api/post");
-}
-
-function* addPost() {
-  try {
-    // fork : 논 블로킹, call : 비동기 (값이 넘어올 때까지 기다림)
-    const result = yield call(addPostAPI);
-    yield put({
-      type: "ADD_POST_SUCCESS",
-      data: result.data,
-    });
-  } catch (err) {
-    yield put({
-      type: "ADD_POST_FAILURE",
       data: err.response.data,
     });
   }
@@ -79,11 +65,6 @@ function* watchLogOut() {
   yield takeLatest("LOG_OUT_REQUEST", logOut);
 }
 
-function* watchAddPost() {
-  yield takeLatest("ADD_POST", addPost);
-}
-
-// root 사가 만들어 놓고 비동기 액션 하나씩 넣어주기
-export default function* rootSaga() {
-  yield all([fork(watchLogIn), fork(watchLogOut), fork(watchAddPost)]);
+export default function* userSaga() {
+  yield all([fork(watchLogIn), fork(watchLogOut)]);
 }
