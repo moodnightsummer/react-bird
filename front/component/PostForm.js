@@ -1,21 +1,24 @@
 import { Button, Form, Input } from "antd";
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useRef, useEffect, useInput } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addPost } from "../reducers/post";
 
 const PostForm = () => {
-  const { imagePaths } = useSelector((state) => state.post);
+  const { imagePaths, addPostDone } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const imageInput = useRef();
-  const [text, setText] = useState("");
-  const onChangeText = useCallback((e) => {
-    setText(e.target.value);
-  }, []);
+  const [text, onChangeText, setText] = useInput("");
+
+  // post 완료되었을 때 텍스트창에 텍스트 지우기
+  useEffect(() => {
+    if (addPostDone) {
+      setText("");
+    }
+  }, [addPostDone]);
 
   const onSubmit = useCallback(() => {
-    dispatch(addPost);
-    setText("");
-  }, []);
+    dispatch(addPost(text));
+  }, [text]);
 
   return (
     <Form

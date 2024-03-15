@@ -30,8 +30,7 @@ const SearchInput = styled(Input.Search)`
 
 const AppLayout = ({ children }) => {
   // useSelector = react-redux에 있음
-  const { isLoggedIn } = useSelector((state) => state.user);
-  console.log(isLoggedIn);
+  const { logInDone } = useSelector((state) => state.user);
   return (
     <div>
       <Global />
@@ -57,7 +56,7 @@ const AppLayout = ({ children }) => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {isLoggedIn ? <UseProfile /> : <LoginForm />}
+          {logInDone ? <UseProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}
